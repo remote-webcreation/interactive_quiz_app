@@ -1,5 +1,5 @@
 import promptSync from "prompt-sync";
-const prompt = promptSync();
+const prompt = promptSync({ sigint: true });
 
 const quizFragen = [
     {
@@ -46,6 +46,7 @@ const quizFragen = [
 
 let punktZahl = 0;
 let aktFrageIndex = 0;  // index aktuelle Frage
+let quizAbgebrochen = false;
 
 
 while (aktFrageIndex < quizFragen.length) {
@@ -59,20 +60,21 @@ while (aktFrageIndex < quizFragen.length) {
 
 
     // added abbr. & zurück
-    console.log('0. Abbrechen'); 
-    console.log('1. zurück');
+    console.log('\n0. Abbrechen'); 
+    console.log('\n6. zurück\n');
 
     let userAntwort;
     let acceptedAntwort = false;
 
     while (!acceptedAntwort) {
 
-        userAntwort = prompt('Deine Antwort (Nummer/b/0): ');
+        userAntwort = prompt('Deine Antwort (Nummer): ');
 
-        if (userAntwort === '0') {
+        if (userAntwort === null) {
 
-            console.log('Quiz abgebrochen');
-            return;
+            console.log('Quiz abgebrochen.');
+            quizAbgebrochen = true;
+            break;
 
         }  else if (userAntwort.toLocaleLowerCase() === 'b') {
 
@@ -80,10 +82,42 @@ while (aktFrageIndex < quizFragen.length) {
                 aktFrageIndex--;  // zurück zur vorherigen Frage
                 acceptedAntwort = true;
 
+            } else {
+                console.log('Du bist bereits bei der ersten Frage.');
+            }
+        } else {
+            const antwNummer = parseInt(userAntwort);
+            if (antwNummer >= 1 && antwNummer <= frageObj.antworten.length) {
+                punktZahl += antwNummer;
+                acceptedAntwort = true;
+                aktFrageIndex++; // zur nächsten Frage
+            } else {
+                console.log('Ungültige Eingabe.');
             }
         }
     }
 }
+
+if (!quizAbgebrochen) {
+    console.log('Deine Gesamtpunktzahl:' + punktZahl);
+
+    function gibFeedback(punktZahl) {
+        
+        if (punktzahl < 25) {
+            console.log('Es gibt viele Möglichkeiten, deine Lernstrategien zu verbessern. Versuche, neue Techniken auszuprobieren und deine Lernumgebung zu optimieren.');
+
+        } else if (punktzahl < 40) {
+
+            console.log('Du hast bereits einige gute Lernstrategien, aber es gibt noch Raum für Verbesserungen. Konzentriere dich darauf, deine Schwächen zu identifizieren und gezielt daran zu arbeiten.');
+
+        } else {
+
+            console.log('Du scheinst ein effektiver Lerner zu sein. Nutze deine Stärken und teile dein Wissen mit anderen.');
+        }
+    }
+    gibFeedback(punktZahl);
+}
+
 
 
 
