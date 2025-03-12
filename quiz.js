@@ -109,15 +109,36 @@ if (!quizAbgebrochen) {
 
     console.log('\nDeine Gesamtpunktzahl: ' + punktzahl);
 
-    // function gibFeedback(punktzahl) {
-    //     // ...  Feedback-Funktion
-    // }
+    function gibFeedback(punktzahl) {
+
+        if (punktzahl < 20) {
+
+            console.log("Es scheint, dass du noch einige Lernstrategien entwickeln kannst. Versuche, neue Techniken auszuprobieren und deine Lernumgebung zu optimieren.");
+
+        }  if (antworten[0] < 3) {
+
+            console.log("Versuche, große Aufgaben in kleinere Teile zu zerlegen.");
+        }
+
+        if (antworten[1] < 3) {
+
+            console.log("Nutze regelmäßig Pausen, um dein Gehirn zu entlasten .");
+        } else if (punktzahl < 35) {
+            console.log("Du hast bereits einige gute Ansätze, aber es gibt noch Verbesserungspotenzial.");
+            if (antworten[3] < 3) {
+                console.log("Konzentriere dich auf die Anwendung von kognitiven Techniken, um negative Gedanken zu ersetzen.");
+            }
+            if (antworten[4] < 3) {
+                console.log("Nutze visuelle Hilfsmittel wie Mindmaps.");
+            }
+        } else {
+            console.log("Hervorragend! Du scheinst sehr effektive Lernstrategien zu verwenden.");
+        }
+
+    }  
 
     gibFeedback(punktzahl);
 }
-
-
-
 
 
 
