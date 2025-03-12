@@ -38,10 +38,13 @@ let questions = [question1, question2, question3, question4, question5];
 
 // play function
 function play(question, answer) {
+
     let userAntwort = readlineSync.question(question);
+
     if (userAntwort.toUpperCase() === answer.toUpperCase()) {
         console.log("\n \nRichtige Antwort!");
         score++;
+        
     } else {
         console.log("\n \nFalsch!");
     }

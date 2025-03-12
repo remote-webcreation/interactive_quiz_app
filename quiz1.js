@@ -1,16 +1,20 @@
-import promptSync from "prompt-sync";
+// promptSync bibliothek für userinput
+import promptSync from "prompt-sync"; 
+// init um Benutzereing. zu erh. & programm beenden 
 const prompt = promptSync({ sigint: true });
 
 
 
 console.log('\nWillkommen zum Lernstrategie-Test!\n');
+
+// speichert name & fügt in template literals ein
 let name = prompt('\nWie lautet dein Name? ');
 console.log(`\nHallo ${name}, dich erwarten 10 Fragen. Los geht's!\n` );
 
-
+// array mit obj. & 2 eigensch.  
 const quizFragen = [
     {
-        frage: '\nWenn ich ein neues Thema lerne, zerlege ich es in\n kleinere, überschaubare Teile.\n',
+        frage: '\nWenn ich ein neues Thema lerne, zerlege ich es in kleinere,\nüberschaubare Teile.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
@@ -51,17 +55,19 @@ const quizFragen = [
     },
 ];
 
+// init. mit number & boolean 
 let punktzahl = 0;
 let aktuelleFrageIndex = 0;
 let quizAbgebrochen = false;
+let benutzerAntworten = [];
 
+
+// loop bis quiz abgebrochen
 while (aktuelleFrageIndex < quizFragen.length && !quizAbgebrochen) {
-
-    const frageObj = quizFragen[aktuelleFrageIndex];
+    const frageObj = quizFragen[aktuelleFrageIndex]; // holt frageObj. für aktuelle Frage
     console.log(frageObj.frage);
 
     frageObj.antworten.forEach((antwort, index) => {
-
         console.log(`${index + 1}. ${antwort}`);
     });
 
@@ -69,76 +75,86 @@ while (aktuelleFrageIndex < quizFragen.length && !quizAbgebrochen) {
     console.log('6. Zurück\n');
 
     let benutzerAntwort;
-    let gueltigeAntwort = false;
 
-    while (!gueltigeAntwort) {
-        benutzerAntwort = prompt('Deine Antwort ist ');
+    while (true) { // inner while loop ohne gueltigeAntwort
+        benutzerAntwort = prompt('Deine Antwort:  ');
 
         if (benutzerAntwort === '0') {
-
             console.log('\nDu hast das Quiz abgebrochen!\n');
             quizAbgebrochen = true;
             break;
+        } else if (benutzerAntwort === '6') {
 
-        } else if (benutzerAntwort.toLowerCase() === 'b') {
             if (aktuelleFrageIndex > 0) {
-
                 aktuelleFrageIndex--;
-                gueltigeAntwort = true;
+                break; // innere schleife endet
 
             } else {
-                console.log('Du bist bereits bei der ersten Frage.');
+                console.log('\nDu bist bereits bei der ersten Frage.\n');
             }
 
         } else {
             const antwortNummer = parseInt(benutzerAntwort);
 
             if (!isNaN(antwortNummer) && antwortNummer >= 1 && antwortNummer <= frageObj.antworten.length) {
-
                 punktzahl += antwortNummer;
-                gueltigeAntwort = true;
+                benutzerAntworten.push(antwortNummer);  // Speichert die Antwort des Benutzers
                 aktuelleFrageIndex++;
-
+                break; // Hier wird die innere Schleife verlassen
             } else {
-                console.log('Ungültige Eingabe.');
+                console.log('\nUngültige Eingabe.\n');
             }
         }
     }
+
+    if (quizAbgebrochen) {
+        break;
+    }
 }
+
+
+
 
 if (!quizAbgebrochen) {
 
     console.log('\nDeine Gesamtpunktzahl: ' + punktzahl);
+    
+     //  Gesamtpunktzahl user & array mit antw. des benutzers
+    function gibFeedback(punktzahl, antworten) { 
 
-    function gibFeedback(punktzahl) {
-
+            // < 20 = allg. feedback zur verbesserung Lernstrateg.
         if (punktzahl < 20) {
 
             console.log("Es scheint, dass du noch einige Lernstrategien entwickeln kannst. Versuche, neue Techniken auszuprobieren und deine Lernumgebung zu optimieren.");
 
+            // checkt erste Antwort Schwellenwert 3 & gibt feedback
         }  if (antworten[0] < 3) {
 
-            console.log("Versuche, große Aufgaben in kleinere Teile zu zerlegen.");
+            console.log("\nVersuche, große Aufgaben in kleinere Teile zu zerlegen.\n");
         }
-
+          // unterscheidet zwischen geringer Zustimmung, Neutralität & starker Zustimmung 1-5
         if (antworten[1] < 3) {
 
-            console.log("Nutze regelmäßig Pausen, um dein Gehirn zu entlasten .");
+            console.log("\nNutze regelmäßig Pausen, um dein Gehirn zu entlasten .\n");
+
+            // vorherige bed. nicht erfüllt = hinweis Verbesserungspotenzial
         } else if (punktzahl < 35) {
-            console.log("Du hast bereits einige gute Ansätze, aber es gibt noch Verbesserungspotenzial.");
+            console.log("\nDu hast bereits einige gute Ansätze, aber es gibt noch Verbesserungspotenzial.\n");
+
+                // < 35 = antworten 3 & 4 werden gecheckt
             if (antworten[3] < 3) {
-                console.log("Konzentriere dich auf die Anwendung von kognitiven Techniken, um negative Gedanken zu ersetzen.");
+                console.log("\nKonzentriere dich auf die Anwendung von kognitiven Techniken, um negative Gedanken zu ersetzen.\n");
             }
             if (antworten[4] < 3) {
-                console.log("Nutze visuelle Hilfsmittel wie Mindmaps.");
+                console.log("\nNutze visuelle Hilfsmittel wie Mindmaps.\n");
             }
-        } else {
-            console.log("Hervorragend! Du scheinst sehr effektive Lernstrategien zu verwenden.");
+        } else { // punktzahl > 35 = feedeback sehr effekt. Lernstrategien
+            console.log("\nHervorragend! Du scheinst sehr effektive Lernstrategien zu verwenden.\n");
         }
 
     }  
 
-    gibFeedback(punktzahl);
+    gibFeedback(punktzahl, benutzerAntworten); 
 }
 
 
