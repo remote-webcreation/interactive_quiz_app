@@ -19,7 +19,7 @@ const quizFragen = [
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: '\nIch nutze visuelle Hilfsmittel wie Mindmaps oder Diagramme, um Informationen zu veranschaulichen.\n',
+        frage: '\nIch nutze visuelle Hilfsmittel wie Mindmaps/ Diagramme/ Notizen, um Informationen zu veranschaulichen.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
@@ -44,53 +44,60 @@ const quizFragen = [
     },
 ];
 
-let punktZahl = 0;
-let aktFrageIndex = 0;  // index aktuelle Frage
+let punktzahl = 0;
+let aktuelleFrageIndex = 0;
 let quizAbgebrochen = false;
 
+while (aktuelleFrageIndex < quizFragen.length && !quizAbgebrochen) {
 
-while (aktFrageIndex < quizFragen.length) {
-
-    const frageObj = quizFragen[aktFrageIndex];
+    const frageObj = quizFragen[aktuelleFrageIndex];
     console.log(frageObj.frage);
 
     frageObj.antworten.forEach((antwort, index) => {
+
         console.log(`${index + 1}. ${antwort}`);
     });
 
+    console.log('\n0. Abbrechen');
+    console.log('6. Zurück\n');
 
-    // added abbr. & zurück
-    console.log('\n0. Abbrechen'); 
-    console.log('\n6. zurück\n');
+    let benutzerAntwort;
+    let gueltigeAntwort = false;
 
-    let userAntwort;
-    let acceptedAntwort = false;
+    while (!gueltigeAntwort) {
+        benutzerAntwort = prompt('Deine Antwort Nr.: ');
 
-    while (!acceptedAntwort) {
+        if (benutzerAntwort === null) {
 
-        userAntwort = prompt('Deine Antwort (Nummer): ');
+            console.log('Quiz abgebrochen (Strg+C).');
+            quizAbgebrochen = true;
+            break;
 
-        if (userAntwort === null) {
+        } else if (benutzerAntwort === '0') {
 
             console.log('Quiz abgebrochen.');
             quizAbgebrochen = true;
             break;
 
-        }  else if (userAntwort.toLocaleLowerCase() === 'b') {
+        } else if (benutzerAntwort.toLowerCase() === 'b') {
+            if (aktuelleFrageIndex > 0) {
 
-            if (aktFrageIndex > 0) {
-                aktFrageIndex--;  // zurück zur vorherigen Frage
-                acceptedAntwort = true;
+                aktuelleFrageIndex--;
+                gueltigeAntwort = true;
 
             } else {
                 console.log('Du bist bereits bei der ersten Frage.');
             }
+
         } else {
-            const antwNummer = parseInt(userAntwort);
-            if (antwNummer >= 1 && antwNummer <= frageObj.antworten.length) {
-                punktZahl += antwNummer;
-                acceptedAntwort = true;
-                aktFrageIndex++; // zur nächsten Frage
+            const antwortNummer = parseInt(benutzerAntwort);
+
+            if (!isNaN(antwortNummer) && antwortNummer >= 1 && antwortNummer <= frageObj.antworten.length) {
+
+                punktzahl += antwortNummer;
+                gueltigeAntwort = true;
+                aktuelleFrageIndex++;
+
             } else {
                 console.log('Ungültige Eingabe.');
             }
@@ -99,23 +106,14 @@ while (aktFrageIndex < quizFragen.length) {
 }
 
 if (!quizAbgebrochen) {
-    console.log('Deine Gesamtpunktzahl:' + punktZahl);
 
-    function gibFeedback(punktZahl) {
-        
-        if (punktzahl < 25) {
-            console.log('Es gibt viele Möglichkeiten, deine Lernstrategien zu verbessern. Versuche, neue Techniken auszuprobieren und deine Lernumgebung zu optimieren.');
+    console.log('\nDeine Gesamtpunktzahl: ' + punktzahl);
 
-        } else if (punktzahl < 40) {
+    // function gibFeedback(punktzahl) {
+    //     // ...  Feedback-Funktion
+    // }
 
-            console.log('Du hast bereits einige gute Lernstrategien, aber es gibt noch Raum für Verbesserungen. Konzentriere dich darauf, deine Schwächen zu identifizieren und gezielt daran zu arbeiten.');
-
-        } else {
-
-            console.log('Du scheinst ein effektiver Lerner zu sein. Nutze deine Stärken und teile dein Wissen mit anderen.');
-        }
-    }
-    gibFeedback(punktZahl);
+    gibFeedback(punktzahl);
 }
 
 
