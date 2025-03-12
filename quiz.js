@@ -1,44 +1,45 @@
-import * as prompt from "prompt-sync";
+import promptSync from "prompt-sync";
+const prompt = promptSync();
 
 const quizFragen = [
     {
-        frage: 'Wenn ich ein neues Thema lerne, zerlege ich es in kleinere, überschaubare Teile.',
+        frage: '\nWenn ich ein neues Thema lerne, zerlege ich es in kleinere, überschaubare Teile.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich nutze regelmäßig Pausen, um mein Gehirn zu entlasten und die Informationen besser zu verarbeiten.',
+        frage: '\nIch nutze regelmäßig Pausen, um mein Gehirn zu entlasten und die Informationen besser zu verarbeiten.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich überprüfe mein Verständnis, indem ich das Gelernte anderen erkläre oder zusammenfasse.',
+        frage: '\nIch überprüfe mein Verständnis, indem ich das Gelernte anderen erkläre oder zusammenfasse.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Wenn ich mich überfordert fühle, versuche ich, negative Gedanken durch positive zu ersetzen.',
+        frage: '\nWenn ich mich überfordert fühle, versuche ich, negative Gedanken durch positive zu ersetzen.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich nutze visuelle Hilfsmittel wie Mindmaps oder Diagramme, um Informationen zu veranschaulichen.',
+        frage: '\nIch nutze visuelle Hilfsmittel wie Mindmaps oder Diagramme, um Informationen zu veranschaulichen.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich plane meine Lernzeiten und setze mir realistische Ziele.',
+        frage: '\nIch plane meine Lernzeiten und setze mir realistische Ziele.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich vermeide Ablenkungen während des Lernens, indem ich z.B. mein Handy ausschalte.',
+        frage: '\nIch vermeide Ablenkungen während des Lernens, indem ich z.B. mein Handy stumm oder komplett ausschalte.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich belohne mich für erreichte Lernziele, um meine Motivation zu steigern.',
+        frage: '\nIch belohne mich für erreichte Lernziele, um meine Motivation zu steigern.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich reflektiere regelmäßig über meine Lernmethoden und passe sie bei Bedarf an.',
+        frage: '\nIch reflektiere regelmäßig über meine Lernmethoden und passe sie bei Bedarf an.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: 'Ich nutze Techniken wie die Pomodoro-Technik, um meine Konzentration zu verbessern.',
+        frage: '\nIch nutze die Pomodoro-Technik, um meine Konzentration zu verbessern.\n' + '(Du teilst dir deine Lernzeit in 25-minütige Segmente ein, die durch fünfminütige Pausen getrennt sind.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
 ];
@@ -50,4 +51,18 @@ for (const frageObj of quizFragen) {
     frageObj.antworten.forEach((antwort, index) => {
         console.log(`${index +1}. ${antwort}`);
     });
+
+    let userAntwort;
+    let acceptedAntwort = false;
+
+    while (!acceptedAntwort) { 
+        userAntwort = parseInt(prompt('Deine Antwort (Nummer): '));
+
+        if (userAntwort >= 1 && userAntwort <= frageObj.antworten.length) {
+            acceptedAntwort = true;
+        } else {
+            console.log('Ungültige Eingabe. Bitte Gib eine Zahl zwischen 1 ' + frageObj.antworten.length + ' ein.');
+        }
+
+    }
 }
