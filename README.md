@@ -3,7 +3,4 @@ receiving &amp; processing user input
 
 ---
 
-##### Terminal-based interactive quiz game for learning & self-reflection
-
-
-
+##### Terminal-based interactive quiz game for JS learning & self-reflection

@@ -1,13 +1,20 @@
 import promptSync from "prompt-sync";
 const prompt = promptSync({ sigint: true });
 
+
+
+console.log('\nWillkommen zum Lernstrategie-Test!\n');
+let name = prompt('\nWie lautet dein Name? ');
+console.log(`\nHallo ${name}, dich erwarten 10 Fragen. Los geht's!\n` );
+
+
 const quizFragen = [
     {
-        frage: '\nWenn ich ein neues Thema lerne, zerlege ich es in kleinere, überschaubare Teile.\n',
+        frage: '\nWenn ich ein neues Thema lerne, zerlege ich es in\n kleinere, überschaubare Teile.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
-        frage: '\nIch nutze regelmäßig Pausen, um mein Gehirn zu entlasten und die Informationen besser zu verarbeiten.\n',
+        frage: '\nIch nutze regelmäßig Pausen, um mein Gehirn zu\n entlasten und die Informationen besser zu verarbeiten.\n',
         antworten: ['Stimme gar nicht zu', 'Stimme wenig zu', 'Neutral', 'Stimme zu', 'Stimme voll zu'],
     },
     {
@@ -65,17 +72,11 @@ while (aktuelleFrageIndex < quizFragen.length && !quizAbgebrochen) {
     let gueltigeAntwort = false;
 
     while (!gueltigeAntwort) {
-        benutzerAntwort = prompt('Deine Antwort Nr.: ');
+        benutzerAntwort = prompt('Deine Antwort ist ');
 
-        if (benutzerAntwort === null) {
+        if (benutzerAntwort === '0') {
 
-            console.log('Quiz abgebrochen (Strg+C).');
-            quizAbgebrochen = true;
-            break;
-
-        } else if (benutzerAntwort === '0') {
-
-            console.log('Quiz abgebrochen.');
+            console.log('\nDu hast das Quiz abgebrochen!\n');
             quizAbgebrochen = true;
             break;
 
