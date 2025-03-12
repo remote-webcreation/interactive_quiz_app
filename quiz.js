@@ -45,24 +45,69 @@ const quizFragen = [
 ];
 
 let punktZahl = 0;
+let aktFrageIndex = 0;  // index aktuelle Frage
 
-for (const frageObj of quizFragen) {
+
+while (aktFrageIndex < quizFragen.length) {
+
+    const frageObj = quizFragen[aktFrageIndex];
     console.log(frageObj.frage);
+
     frageObj.antworten.forEach((antwort, index) => {
-        console.log(`${index +1}. ${antwort}`);
+        console.log(`${index + 1}. ${antwort}`);
     });
+
+
+    // added abbr. & zurück
+    console.log('0. Abbrechen'); 
+    console.log('1. zurück');
 
     let userAntwort;
     let acceptedAntwort = false;
 
-    while (!acceptedAntwort) { 
-        userAntwort = parseInt(prompt('Deine Antwort (Nummer): '));
+    while (!acceptedAntwort) {
 
-        if (userAntwort >= 1 && userAntwort <= frageObj.antworten.length) {
-            acceptedAntwort = true;
-        } else {
-            console.log('Ungültige Eingabe. Bitte Gib eine Zahl zwischen 1 ' + frageObj.antworten.length + ' ein.');
+        userAntwort = prompt('Deine Antwort (Nummer/b/0): ');
+
+        if (userAntwort === '0') {
+
+            console.log('Quiz abgebrochen');
+            return;
+
+        }  else if (userAntwort.toLocaleLowerCase() === 'b') {
+
+            if (aktFrageIndex > 0) {
+                aktFrageIndex--;  // zurück zur vorherigen Frage
+                acceptedAntwort = true;
+
+            }
         }
-
     }
 }
+
+
+
+
+
+
+
+// for (const frageObj of quizFragen) {
+//     console.log(frageObj.frage);
+//     frageObj.antworten.forEach((antwort, index) => {
+//         console.log(`${index +1}. ${antwort}`);
+//     });
+
+//     let userAntwort;
+//     let acceptedAntwort = false;
+
+//     while (!acceptedAntwort) { 
+//         userAntwort = parseInt(prompt('Deine Antwort (Nummer): '));
+
+//         if (userAntwort >= 1 && userAntwort <= frageObj.antworten.length) {
+//             acceptedAntwort = true;
+//         } else {
+//             console.log('Ungültige Eingabe. Bitte Gib eine Zahl zwischen 1 ' + frageObj.antworten.length + ' ein.');
+//         }
+
+//     }
+// }
