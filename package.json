@@ -20,6 +20,8 @@
   "homepage": "https://github.com/remote-webcreation/interactive_quiz_app#readme",
   "devDependencies": {
     "prompt-sync": "^4.2.0"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10"
   }
-  
 }
