@@ -2,12 +2,12 @@ import readlineSync from "readline-sync";
 
 let score = 0;
 
-let username = readlineSync.question("Willkommen zum Java-Script Quiz, \n \nwie lautet dein Name? ");
+let username = readlineSync.question("\nWillkommen zum Java-Script Quiz, \n \nwie lautet dein Name? ");
 
-console.log('\nHallo', username + ', es geht los. Viel Erfolg!');
+console.log('\nHallo', username + ', es gibt 5 Fragen zu beantworten. Viel Erfolg!');
 
 let question1 = {
-    question: '\nFrage 1: Was ist der Unterschied zwischen "let", "const" und "var"? \n \n A. let und const haben Block-Scope var hat Function-Scope \n B. var und const haben Block-Scope, let hat Function-Scope \n C. Es gibt keinen Unterschied \n D. let und var haben Block-Scope, const hat Global-Scope\n',
+    question: '\nFrage 1: Was ist der Unterschied zwischen "let", "const" & "var"? \n \n A. let & const haben Block-Scope var hat Function-Scope \n B. var & const haben Block-Scope, let hat Function-Scope \n C. es gibt keinen Unterschied \n D. let & var haben Block-Scope, const hat Global-Scope\n',
     antwort: "A"
 }
 
@@ -23,7 +23,7 @@ let question3 = {
 }
 
 let question4 = {
-    question: '\nFrage 4: Was ist ein Closure in JavaScript?\n \n A. Eine Funktion, die keine Parameter hat \n B. Eine Funktion, die auf Variablen aus ihrem lexikalischen\n Scope zugreifen kann, auch wenn die äußere Funktion bereits beendet wurde \n C. Eine Funktion, die nur globale Variablen verwenden kann \n D. Eine Funktion, die immer anonym ist\n',
+    question: '\nFrage 4: Was ist ein Closure in JavaScript?\n \n A. Funktion, die keine Parameter hat \n B. Funktion, die auf Variablen aus ihrem lexikalischen\n Scope zugreifen kann, auch wenn die äußere Funktion bereits beendet wurde \n C. Funktion, die nur globale Variablen verwenden kann \n D. Funktion, die immer anonym ist\n',
     antwort: "B"
 
 }
@@ -52,4 +52,4 @@ questions.forEach(questionObj => {
     play(questionObj.question, questionObj.antwort);
 });
 
-console.log("Dein Score ist: " + score + "/5 ");
+console.log("\nDein Score: " + score + "/5 Punkte\n");
